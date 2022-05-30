@@ -6,7 +6,7 @@ public class CustomerService {
         Customer customer = site.getCustomer();
 
         String customerName;
-        if (customer.getName().equals("unknown")) {
+        if (customer.isUnknown()) {
             customerName = "occupant";
         } else {
             customerName = customer.getName();
@@ -17,12 +17,12 @@ public class CustomerService {
 
     public BillingPlan billingPlan(Site site) {
         Customer customer = site.getCustomer();
-        return customer.getName().equals("unknown") ? new BasicBillingPlan() : customer.getBillingPlan();
+        return customer.isUnknown() ? new BasicBillingPlan() : customer.getBillingPlan();
     }
 
     public int weeksDelinquent(Site site) {
         Customer customer = site.getCustomer();
-        return customer.getName().equals("unknown") ? 0 : customer.getPaymentHistory().getWeeksDelinquentInLastYear();
+        return customer.isUnknown() ? 0 : customer.getPaymentHistory().getWeeksDelinquentInLastYear();
     }
 
 }
