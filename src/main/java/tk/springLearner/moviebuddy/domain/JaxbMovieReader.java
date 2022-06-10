@@ -13,6 +13,7 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class JaxbMovieReader implements MovieReader{
 
@@ -27,11 +28,11 @@ public class JaxbMovieReader implements MovieReader{
             final Source source = new StreamSource(content);
             final MovieMetadata metadata = (MovieMetadata) unmarshaller.unmarshal(source);
 
+            return metadata.toMovies();
             
         } catch( JAXBException error){
             throw new ApplicationException("failed to load movies data", error);
         }
-        return null;
     }
 
     @XmlRootElement(name = "moviemetadata")
@@ -44,6 +45,10 @@ public class JaxbMovieReader implements MovieReader{
 
         public void setMovies(List<MovieData> movies) {
             this.movies = movies;
+        }
+
+        public List<Movie> toMovies(){
+            return movies.stream().map(MovieData::toMovie).collect(Collectors.toList());
         }
     }
 
@@ -58,8 +63,21 @@ public class JaxbMovieReader implements MovieReader{
         private String director;
         private List<String> actors;
         private URL imdbLink;
-        private String watchedData;
+        private String watchedDate;
 
+        public Movie toMovie(){
+            String title = getTitle();
+            List<String> genres = getGenres();
+            String language = getLanguage();
+            String country = getCountry();
+            int releaseYear = getReleaseYear();
+            String director = getDirector();
+            List<String> actors = getActors();
+            URL imdbLink = getImdbLink();
+            String watchedDate = getWatchedDate();
+
+            return Movie.of(title, genres, language, country, releaseYear, director, actors, imdbLink, watchedDate);
+        }
 
     }
 }
