@@ -1,5 +1,6 @@
 package tk.springLearner.moviebuddy;
 
+import tk.springLearner.moviebuddy.domain.CsvMovieReader;
 import tk.springLearner.moviebuddy.domain.Movie;
 import tk.springLearner.moviebuddy.domain.MovieFinder;
 
@@ -36,7 +37,9 @@ public class MovieBuddyApplication {
 
     public void run(String[] args) throws Exception {
 
-        final MovieFinder movieFinder = new MovieFinder();
+        final MovieBuddyFactory movieBuddyFactory = new MovieBuddyFactory();
+
+        final MovieFinder movieFinder = movieBuddyFactory.movieFinder();
         final AtomicBoolean running = new AtomicBoolean(true);
         final BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         final PrintWriter output = new PrintWriter(System.out, false);
