@@ -26,6 +26,7 @@ dependencies {
 	implementation group: 'org.kohsuke', name: 'github-api', version: '1.116'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

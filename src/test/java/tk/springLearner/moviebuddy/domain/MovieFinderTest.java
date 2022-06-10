@@ -2,6 +2,8 @@ package tk.springLearner.moviebuddy.domain;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import tk.springLearner.moviebuddy.MovieBuddyFactory;
 
 import java.util.List;
@@ -12,8 +14,8 @@ import static org.assertj.core.api.Assertions.*;
  * @author springrunner.kr@gmail.com
  */
 public class MovieFinderTest {
-	final MovieBuddyFactory movieBuddyFactory = new MovieBuddyFactory();
-	final MovieFinder movieFinder = movieBuddyFactory.movieFinder();
+	final ApplicationContext applicationContext = new AnnotationConfigApplicationContext(MovieBuddyFactory.class);
+	final MovieFinder movieFinder = applicationContext.getBean(MovieFinder.class);
 
 	@Test
 	void notEmpty_directedBy(){
