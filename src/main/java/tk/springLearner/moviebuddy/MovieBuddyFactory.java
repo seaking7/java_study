@@ -1,15 +1,13 @@
 package tk.springLearner.moviebuddy;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.*;
 import tk.springLearner.moviebuddy.domain.CsvMovieReader;
 import tk.springLearner.moviebuddy.domain.MovieFinder;
 import tk.springLearner.moviebuddy.domain.MovieReader;
 
 @Configuration
+@ComponentScan(basePackages = {"tk.springLearner"})
 @Import({MovieBuddyFactory.DomainModuleConfig.class, MovieBuddyFactory.DataSourceModuleConfig.class})
 public class MovieBuddyFactory {
 
@@ -24,10 +22,7 @@ public class MovieBuddyFactory {
 
     @Configuration
     static class DataSourceModuleConfig{
-        @Bean
-        public MovieReader movieReader(){
-            return new CsvMovieReader();
-        }
+
     }
 
 

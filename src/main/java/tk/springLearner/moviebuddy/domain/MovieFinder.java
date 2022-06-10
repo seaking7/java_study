@@ -1,15 +1,20 @@
 package tk.springLearner.moviebuddy.domain;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Service
 public class MovieFinder {
 
     private final MovieReader movieReader;
 
-    public MovieFinder(MovieReader movieReader) {
-        this.movieReader = Objects.requireNonNull(movieReader);
+    @Autowired
+    public MovieFinder(MovieReader mmovieReader) {
+        this.movieReader = Objects.requireNonNull(mmovieReader);
     }
 
     /**

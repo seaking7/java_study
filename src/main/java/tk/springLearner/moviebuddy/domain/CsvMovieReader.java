@@ -1,6 +1,8 @@
 package tk.springLearner.moviebuddy.domain;
 
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import tk.springLearner.moviebuddy.ApplicationException;
 import tk.springLearner.moviebuddy.util.FileSystemUtils;
 
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Repository("movieReader")
 public class CsvMovieReader implements MovieReader{
 
     @Override
