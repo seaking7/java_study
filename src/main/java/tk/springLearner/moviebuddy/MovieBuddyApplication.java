@@ -2,7 +2,6 @@ package tk.springLearner.moviebuddy;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import tk.springLearner.moviebuddy.domain.CsvMovieReader;
 import tk.springLearner.moviebuddy.domain.Movie;
 import tk.springLearner.moviebuddy.domain.MovieFinder;
 

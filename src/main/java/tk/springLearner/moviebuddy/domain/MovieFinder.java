@@ -13,8 +13,8 @@ public class MovieFinder {
     private final MovieReader movieReader;
 
     @Autowired
-    public MovieFinder(MovieReader mmovieReader) {
-        this.movieReader = Objects.requireNonNull(mmovieReader);
+    public MovieFinder(MovieReader movieReader) {
+        this.movieReader = Objects.requireNonNull(movieReader);
     }
 
     /**

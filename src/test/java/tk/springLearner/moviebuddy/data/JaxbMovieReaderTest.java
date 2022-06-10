@@ -1,14 +1,19 @@
-package tk.springLearner.moviebuddy.domain;
+package tk.springLearner.moviebuddy.data;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import tk.springLearner.moviebuddy.MovieBuddyFactory;
+import tk.springLearner.moviebuddy.MovieBuddyProfile;
+import tk.springLearner.moviebuddy.data.JaxbMovieReader;
+import tk.springLearner.moviebuddy.domain.Movie;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ActiveProfiles(MovieBuddyProfile.XML_MODE)
 @SpringJUnitConfig(MovieBuddyFactory.class)
 class JaxbMovieReaderTest {
     JaxbMovieReader movieReader;

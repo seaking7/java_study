@@ -1,8 +1,6 @@
 package tk.springLearner.moviebuddy;
 
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.*;
-import tk.springLearner.moviebuddy.domain.CsvMovieReader;
 import tk.springLearner.moviebuddy.domain.MovieFinder;
 import tk.springLearner.moviebuddy.domain.MovieReader;
 

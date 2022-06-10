@@ -1,9 +1,13 @@
-package tk.springLearner.moviebuddy.domain;
+package tk.springLearner.moviebuddy.data;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import tk.springLearner.moviebuddy.ApplicationException;
+import tk.springLearner.moviebuddy.MovieBuddyProfile;
+import tk.springLearner.moviebuddy.domain.Movie;
+import tk.springLearner.moviebuddy.domain.MovieReader;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -16,8 +20,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Profile(MovieBuddyProfile.XML_MODE)
 @Repository
-public class JaxbMovieReader implements MovieReader{
+public class JaxbMovieReader implements MovieReader {
 
     @Override
     public List<Movie> loadMovies() {

@@ -1,9 +1,12 @@
-package tk.springLearner.moviebuddy.domain;
+package tk.springLearner.moviebuddy.data;
 
 
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import tk.springLearner.moviebuddy.ApplicationException;
+import tk.springLearner.moviebuddy.MovieBuddyProfile;
+import tk.springLearner.moviebuddy.domain.Movie;
+import tk.springLearner.moviebuddy.domain.MovieReader;
 import tk.springLearner.moviebuddy.util.FileSystemUtils;
 
 import java.io.IOException;
@@ -18,8 +21,9 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Repository("movieReader")
-public class CsvMovieReader implements MovieReader{
+@Profile(MovieBuddyProfile.CSV_MODE)
+@Repository
+public class CsvMovieReader implements MovieReader {
 
     @Override
     public List<Movie> loadMovies() {
