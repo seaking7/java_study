@@ -2,6 +2,7 @@ package tk.springLearner.moviebuddy.data;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import tk.springLearner.moviebuddy.ApplicationException;
 
 import javax.annotation.PostConstruct;
@@ -21,6 +22,7 @@ public abstract class AbstractFileSystemMovieReader {
         return metadata;
     }
 
+    @Value("${movie.metadata}")
     public void setMetadata(String metadata) throws FileNotFoundException, URISyntaxException {
         this.metadata = Objects.requireNonNull(metadata, "metadata is required value");
     }
