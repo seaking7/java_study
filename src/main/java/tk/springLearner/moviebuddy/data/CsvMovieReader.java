@@ -23,12 +23,12 @@ import java.util.stream.Collectors;
 
 @Profile(MovieBuddyProfile.CSV_MODE)
 @Repository
-public class CsvMovieReader implements MovieReader {
+public class CsvMovieReader extends AbstractFileSystemMovieReader implements MovieReader {
 
     @Override
     public List<Movie> loadMovies() {
         try {
-            final URI resourceUri = ClassLoader.getSystemResource("movie_metadata.csv").toURI();
+            final URI resourceUri = ClassLoader.getSystemResource(getMetadata()).toURI();
             final Path data = Path.of(FileSystemUtils.checkFileSystem(resourceUri));
             final Function<String, Movie> mapCsv = csv -> {
                 try {
@@ -61,4 +61,5 @@ public class CsvMovieReader implements MovieReader {
         }
 
     }
+
 }
