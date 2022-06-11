@@ -1,16 +1,25 @@
 package tk.springLearner.moviebuddy.data;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.DefaultResourceLoader;
+import tk.springLearner.moviebuddy.domain.Movie;
 
 import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 class CsvMovieReaderTest {
 
     @Test
     void valid_Metadata() throws Exception {
-        CsvMovieReader movieReader = new CsvMovieReader();
+        Cache<String, List<Movie>> cache = Caffeine.newBuilder()
+                .expireAfterWrite(3, TimeUnit.SECONDS)
+                .build();
+
+        CsvMovieReader movieReader = new CsvMovieReader(cache);
         movieReader.setMetadata("movie_metadata.csv");
         movieReader.setResourceLoader(new DefaultResourceLoader());
 
@@ -19,7 +28,10 @@ class CsvMovieReaderTest {
 
     @Test
     void invalid_Metadata() throws Exception {
-        CsvMovieReader movieReader = new CsvMovieReader();
+        Cache<String, List<Movie>> cache = Caffeine.newBuilder()
+                .expireAfterWrite(3, TimeUnit.SECONDS)
+                .build();
+        CsvMovieReader movieReader = new CsvMovieReader(cache);
         movieReader.setMetadata("invalid.csv");
         movieReader.setResourceLoader(new DefaultResourceLoader());
 

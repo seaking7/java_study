@@ -1,14 +1,20 @@
 package tk.springLearner.moviebuddy;
 
+
+
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
-import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import tk.springLearner.moviebuddy.data.CsvMovieReader;
-import tk.springLearner.moviebuddy.data.XmlMovieReader;
+import tk.springLearner.moviebuddy.domain.Movie;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 @PropertySource("/application.properties")
@@ -41,7 +47,11 @@ public class MovieBuddyFactory {
         @Profile(MovieBuddyProfile.CSV_MODE)
         @Bean
         public CsvMovieReader csvMovieReader() throws FileNotFoundException, URISyntaxException {
-            CsvMovieReader movieReader = new CsvMovieReader();
+
+            Cache<String, List<Movie>> cache = Caffeine.newBuilder()
+                                                .expireAfterWrite(3, TimeUnit.SECONDS)
+                                                .build();
+            CsvMovieReader movieReader = new CsvMovieReader(cache);
 //            movieReader.setMetadata(environment.getProperty("movie.metadata"));
             return movieReader;
         }

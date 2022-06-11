@@ -24,7 +24,7 @@ public class MovieFinderTest {
 	public MovieFinderTest(MovieFinder movieFinder) {
 		this.movieFinder = movieFinder;
 	}
- 
+
 	@Test
 	void notEmpty_directedBy(){
 		List<Movie> movies = movieFinder.directedBy("Michael Bay");

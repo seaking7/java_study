@@ -1,6 +1,7 @@
 package tk.springLearner.moviebuddy.data;
 
 
+import com.github.benmanes.caffeine.cache.Cache;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import tk.springLearner.moviebuddy.ApplicationException;
@@ -16,6 +17,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -23,8 +25,20 @@ import java.util.stream.Collectors;
 @Repository
 public class CsvMovieReader extends AbstractMetadataResourceMovieReader implements MovieReader {
 
+    private final Cache<String, List<Movie>> cache;
+
+    public CsvMovieReader(Cache<String, List<Movie>> cache) {
+        this.cache = Objects.requireNonNull(cache);
+    }
+
     @Override
     public List<Movie> loadMovies() {
+        //캐시에 저장된 데이터가 있으면, 즉시 반환한다.
+        List<Movie> movies = cache.getIfPresent("csv.movies");
+        if(Objects.nonNull(movies) && movies.size()>0){
+            return movies;
+        }
+
         try {
             final Function<String, Movie> mapCsv = csv -> {
                 try {
@@ -48,7 +62,7 @@ public class CsvMovieReader extends AbstractMetadataResourceMovieReader implemen
             };
 
             final InputStream content = getMetadataResource().getInputStream();
-            return new BufferedReader(new InputStreamReader(content, StandardCharsets.UTF_8))
+            movies =  new BufferedReader(new InputStreamReader(content, StandardCharsets.UTF_8))
                     .lines()
                     .skip(1)
                     .map(mapCsv)
@@ -56,6 +70,9 @@ public class CsvMovieReader extends AbstractMetadataResourceMovieReader implemen
         } catch (IOException error) {
             throw new ApplicationException("failed to load movies data.", error);
         }
+
+        cache.put("csv.movies", movies);
+        return movies;
     }
 
 }
