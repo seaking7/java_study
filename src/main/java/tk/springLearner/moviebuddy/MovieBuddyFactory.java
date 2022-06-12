@@ -8,8 +8,10 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import tk.springLearner.moviebuddy.data.CachingMovieReader;
 import tk.springLearner.moviebuddy.data.CsvMovieReader;
 import tk.springLearner.moviebuddy.domain.Movie;
+import tk.springLearner.moviebuddy.domain.MovieReader;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
@@ -48,12 +50,19 @@ public class MovieBuddyFactory {
         @Bean
         public CsvMovieReader csvMovieReader() throws FileNotFoundException, URISyntaxException {
 
-            Cache<String, List<Movie>> cache = Caffeine.newBuilder()
-                                                .expireAfterWrite(3, TimeUnit.SECONDS)
-                                                .build();
-            CsvMovieReader movieReader = new CsvMovieReader(cache);
-//            movieReader.setMetadata(environment.getProperty("movie.metadata"));
+            CsvMovieReader movieReader = new CsvMovieReader();
+            movieReader.setMetadata(environment.getProperty("movie.metadata"));
             return movieReader;
+        }
+
+        @Primary
+        @Bean
+        public MovieReader cachingMovieReader(){
+            Cache<String, List<Movie>> cache = Caffeine.newBuilder()
+                    .expireAfterWrite(3, TimeUnit.SECONDS)
+                    .build();
+            CsvMovieReader target = new CsvMovieReader();
+            return new CachingMovieReader(cache, target);
         }
 
 //        @Profile(MovieBuddyProfile.XML_MODE)

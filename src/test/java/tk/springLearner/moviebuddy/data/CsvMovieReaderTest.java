@@ -15,11 +15,8 @@ class CsvMovieReaderTest {
 
     @Test
     void valid_Metadata() throws Exception {
-        Cache<String, List<Movie>> cache = Caffeine.newBuilder()
-                .expireAfterWrite(3, TimeUnit.SECONDS)
-                .build();
 
-        CsvMovieReader movieReader = new CsvMovieReader(cache);
+        CsvMovieReader movieReader = new CsvMovieReader();
         movieReader.setMetadata("movie_metadata.csv");
         movieReader.setResourceLoader(new DefaultResourceLoader());
 
@@ -28,10 +25,8 @@ class CsvMovieReaderTest {
 
     @Test
     void invalid_Metadata() throws Exception {
-        Cache<String, List<Movie>> cache = Caffeine.newBuilder()
-                .expireAfterWrite(3, TimeUnit.SECONDS)
-                .build();
-        CsvMovieReader movieReader = new CsvMovieReader(cache);
+
+        CsvMovieReader movieReader = new CsvMovieReader();
         movieReader.setMetadata("invalid.csv");
         movieReader.setResourceLoader(new DefaultResourceLoader());
 
