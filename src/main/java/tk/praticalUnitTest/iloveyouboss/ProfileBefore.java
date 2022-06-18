@@ -33,23 +33,36 @@ public class ProfileBefore {
    }
    
    public boolean matches(Criteria criteria) {
-      score = 0;
-      
-      boolean kill = false;
-      boolean anyMatches = false;
+      calculateScore(criteria);
+      if (doesNotMeetAnyMustMatchCriterion(criteria))
+         return false;
+      return anyMatches(criteria);
+   }
+
+   private boolean doesNotMeetAnyMustMatchCriterion(Criteria criteria) {
       for (Criterion criterion: criteria) {
          boolean match = criterion.matches(answerMatching(criterion));
          if (!match && criterion.getWeight() == Weight.MustMatch) {
-            kill = true;
+            return true;
          }
-         if (match) {
+      }
+      return false;
+   }
+
+   private void calculateScore(Criteria criteria){
+      score = 0;
+      for(Criterion criterion: criteria){
+         if( criterion.matches(answerMatching(criterion))){
             score += criterion.getWeight().getValue();
          }
-         anyMatches |= match;
-         // ...
       }
-      if (kill)
-         return false;
+   }
+
+   private boolean anyMatches(Criteria criteria){
+      boolean anyMatches = false;
+      for(Criterion criterion: criteria){
+         anyMatches = criterion.matches(answerMatching(criterion));
+      }
       return anyMatches;
    }
 
