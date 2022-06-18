@@ -39,12 +39,6 @@ public class ProfileBefore {
    }
 
 
-
-   private Answer answerMatching(Criterion criterion) {
-      return answers.get(criterion.getAnswer().getQuestionText());
-   }
-
-
    public int score() {
       return score;
    }
