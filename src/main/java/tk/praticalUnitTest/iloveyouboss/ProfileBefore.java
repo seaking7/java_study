@@ -38,11 +38,7 @@ public class ProfileBefore {
       boolean kill = false;
       boolean anyMatches = false;
       for (Criterion criterion: criteria) {
-         Answer answer = answers.get(
-               criterion.getAnswer().getQuestionText());
-         boolean match = 
-               criterion.getWeight() == Weight.DontCare ||
-               answer.match(criterion.getAnswer());
+         boolean match = criterion.matches(answerMatching(criterion));
          if (!match && criterion.getWeight() == Weight.MustMatch) {
             kill = true;
          }
@@ -56,6 +52,11 @@ public class ProfileBefore {
          return false;
       return anyMatches;
    }
+
+   private Answer answerMatching(Criterion criterion) {
+      return answers.get(criterion.getAnswer().getQuestionText());
+   }
+
 
    public int score() {
       return score;
