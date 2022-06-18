@@ -31,40 +31,14 @@ public class ProfileBefore {
    public void add(Answer answer) {
       answers.put(answer.getQuestionText(), answer);
    }
-   
-   public boolean matches(Criteria criteria) {
-      calculateScore(criteria);
-      if (doesNotMeetAnyMustMatchCriterion(criteria))
-         return false;
-      return anyMatches(criteria);
+
+   public boolean matches(Criteria criteria){
+      MatchSet matchSet = new MatchSet(answers, criteria);
+      score = matchSet.getScore();
+      return matchSet.matches();
    }
 
-   private boolean doesNotMeetAnyMustMatchCriterion(Criteria criteria) {
-      for (Criterion criterion: criteria) {
-         boolean match = criterion.matches(answerMatching(criterion));
-         if (!match && criterion.getWeight() == Weight.MustMatch) {
-            return true;
-         }
-      }
-      return false;
-   }
 
-   private void calculateScore(Criteria criteria){
-      score = 0;
-      for(Criterion criterion: criteria){
-         if( criterion.matches(answerMatching(criterion))){
-            score += criterion.getWeight().getValue();
-         }
-      }
-   }
-
-   private boolean anyMatches(Criteria criteria){
-      boolean anyMatches = false;
-      for(Criterion criterion: criteria){
-         anyMatches = criterion.matches(answerMatching(criterion));
-      }
-      return anyMatches;
-   }
 
    private Answer answerMatching(Criterion criterion) {
       return answers.get(criterion.getAnswer().getQuestionText());
