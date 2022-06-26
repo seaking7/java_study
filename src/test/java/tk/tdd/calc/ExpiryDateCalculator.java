@@ -1,0 +1,11 @@
+package tk.tdd.calc;
+
+import java.time.LocalDate;
+
+public class ExpiryDateCalculator {
+
+    public LocalDate calculateExpiryDate(LocalDate billingDate, int payAmount) {
+
+        return billingDate.plusMonths(1);
+    }
+}
