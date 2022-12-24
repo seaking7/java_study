@@ -1,0 +1,1 @@
+package tk.refactoring._05_global_data;

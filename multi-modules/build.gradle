@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+bootJar.enabled = false
+
+allprojects { // 모든 프로젝트에 반영되는 부분
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+
+}
+
+
+def javaProjects = [ // Java 로 작성된 소스코드에 대한 공통작업 선언
+     project(":shark-common"),
+     project(":shark-web"),
+     project(":shark-simul"),
+]
+
+configure(javaProjects) {
+    group = 'tk'
+    version = '1.0'
+    sourceCompatibility = '17'
+
+    apply plugin: 'java'
+    // build.gradle에서 api() 를 사용하려면 java-library 사용
+    apply plugin: 'java-library'
+    apply plugin: 'org.springframework.boot'
+    // spring boot dependency를 사용하여 사용중인 부트 버전에서 자동으로 의존성을 가져온다.
+    apply plugin: 'io.spring.dependency-management'
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    // 관리하는 모듈에 공통 dependencies
+    dependencies {
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+}
