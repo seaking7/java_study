@@ -14,7 +14,7 @@ public class DemoFeignConfig {
         return DemoFeignInterceptor.of();
     }
 
-    @Bean
+    // @Bean
     public DemoFeignErrorDecoder DemoErrorDecoder() {
         return new DemoFeignErrorDecoder();
     }

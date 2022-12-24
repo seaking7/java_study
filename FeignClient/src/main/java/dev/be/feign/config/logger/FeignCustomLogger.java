@@ -1,4 +1,4 @@
-package dev.be.feign.feign.logger;
+package dev.be.feign.config.logger;
 
 import static feign.Util.UTF_8;
 import static feign.Util.decodeOrDefault;
@@ -22,7 +22,8 @@ public class FeignCustomLogger extends Logger {
     @Override
     protected void log(String configKey, String format, Object... args) {
         // log를 어떤 형식으로 남길지 정해준다.
-        System.out.println(String.format(methodTag(configKey) + format, args));
+        // System.out.println(String.format(methodTag(configKey) + format, args));
+        log.info(String.format(methodTag(configKey) + format, args));
     }
 
     @Override
@@ -41,7 +42,8 @@ public class FeignCustomLogger extends Logger {
          * 그러므로 request에 대한 정보를 [logRequest, logAndRebufferResponse] 중 어디에서 남길지 정하면 된다.
          * 만약 `logAndRebufferResponse`에서 남긴다면 `logRequest`는 삭제해버리자.
          */
-        System.out.println(request);
+        // System.out.println(request);
+        log.info(request.toString());
     }
 
     @Override
@@ -70,15 +72,20 @@ public class FeignCustomLogger extends Logger {
                         && logLevel.compareTo(Level.NONE) > 0 ? " " + response.reason() : "";
         int status = response.status();
         log(configKey, "<--- %s %s%s (%sms)", protocolVersion, status, reason, elapsedTime);
+        StringBuilder headerLog = new StringBuilder();
         if (logLevel.ordinal() >= Level.HEADERS.ordinal()) {
 
             for (String field : response.headers().keySet()) {
                 if (shouldLogResponseHeader(field)) {
                     for (String value : valuesOrEmpty(response.headers(), field)) {
-                        log(configKey, "%s: %s", field, value);
+                        // log(configKey, "%s: %s", field, value);
+                        headerLog.append(value).append("/");
                     }
                 }
             }
+
+            log(configKey, "header: %s", headerLog.toString());
+            // log(configKey, "response: %s", response.toString());
 
             int bodyLength = 0;
             if (response.body() != null && !(status == 204 || status == 205)) {

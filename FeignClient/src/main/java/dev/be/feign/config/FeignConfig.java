@@ -3,7 +3,7 @@ package dev.be.feign.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import dev.be.feign.feign.logger.FeignCustomLogger;
+import dev.be.feign.config.logger.FeignCustomLogger;
 import feign.Logger;
 
 @Configuration
