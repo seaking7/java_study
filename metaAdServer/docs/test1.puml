@@ -1,0 +1,91 @@
+
+
+@startuml
+
+
+Actor User
+participant STB
+participant MobileTV as "MobileTV/아이들나라App"
+
+participant UCube
+participant DAS
+
+box
+participant PVSAPS as "PVS/APS"
+participant MIMS
+end box
+
+== IPTV ==
+
+User -> UCube: Subscribe
+UCube -> DAS: Sync (가번, MAC, ID, SSO_Key, OneID_Key)
+UCube -> PVSAPS: Sync (가번, MAC, SSO_Key, OneID_Key)
+User -> STB: Power on
+STB -> PVSAPS: Auth_Request(MAC)
+PVSAPS --> STB: Response(가번, MAC)
+STB -> MIMS: Request_Home_Menu(가번, MAC)
+
+== Mobile TV/아이들나라 ==
+User -> MobileTV: Launch
+
+activate MobileTV
+alt User == LGU+ Subscriber case
+MobileTV -> PVSAPS: GetSubscriberInfo(USIMID(=ICCID))
+activate PVSAPS
+PVSAPS -> PVSAPS: Validate Subscriber(USIMID)
+MobileTV <-- PVSAPS: Response(SA_ID, 가상 MAC) 
+deactivate PVSAPS
+
+else User != LGU+ Subscriber case
+MobileTV <-- PVSAPS: Error Response (405)
+MobileTV -> MobileTV: Change to GUEST mode
+deactivate MobileTV
+
+User -> MobileTV: Use a function for subscribers
+activate MobileTV
+MobileTV -> DAS: Login(ID/PW)
+activate DAS
+MobileTV <-- DAS: Response(SSO_Key, OneID_Key, 자타사여부)
+deactivate DAS
+MobileTV -> PVSAPS: Auth(ID, Hash(OneID_Key, SSO_Key, ...))
+activate PVSAPS
+MobileTV <-- PVSAPS: Response (SA_ID, 가상 MAC)
+deactivate PVSAPS
+
+deactivate MobileTV
+end
+
+User -> MobileTV: Use a function for subscribers
+activate MobileTV
+MobileTV -> MIMS: API Call(SA_ID, 가상 MAC)
+activate MIMS
+MobileTV <-- MIMS: Response (...)
+deactivate MobileTV
+deactivate MIMS
+
+== To-be #1 Auth Solution ==
+
+MobileTV -> APIGW: API Call(SA_ID, 가상 MAC)
+activate MobileTV
+activate APIGW
+APIGW -> AuthService: Validate (SA_ID,   가상 MAC)
+activate AuthService
+alt validated case 
+APIGW -> MIMS: API Call 
+deactivate APIGW
+activate MIMS
+MIMS --> MobileTV: Response(OK)
+deactivate MIMS 
+
+
+else not validated case 
+AuthService --> APIGW: Response(401)
+deactivate AuthService
+activate APIGW
+APIGW --> MobileTV: Response (Error 405)
+deactivate APIGW
+deactivate MobileTV
+end
+
+
+@enduml

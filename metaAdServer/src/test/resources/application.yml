@@ -1,0 +1,44 @@
+server:
+  shutdown: graceful
+  port: 8080
+
+spring:
+  profiles:
+    active: test
+    include: oauth
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  jpa:
+    show-sql: true
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://1.1.1.1:3306/metaDev?serverTimezone=UTC&characterEncoding=UTF-8
+      username: user
+      password: pass
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    hikari:
+      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1  # 개발 DB 환경으로 인한 테스트실패를 방지하기 위해 embed 로 테스트
+      username: sa
+      password:

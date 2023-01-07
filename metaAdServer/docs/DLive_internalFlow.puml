@@ -1,0 +1,37 @@
+@startuml
+
+participant MediaAPI
+participant Shark as "외부매체 광고서버"
+participant 외부GW
+box
+participant DLive
+participant STP
+end box
+
+== 소재 사전연동 ==
+MediaAPI --> DLive : 광고소재 Noti(POST 매체서버/notification )
+activate DLive
+DLive --> MediaAPI : API 인증(/mediaApi/v1/auth)
+DLive -> MediaAPI : 소재 조회(GET /mediaApi/v1/creative/:creativeId?mediaId=id)
+DLive -> MediaAPI : 광고소재 다운로드(조회된 url)
+DLive -> DLive : CDN 업로드
+DLive -> MediaAPI : 소재 정보 상태변경(PUT /mediaApi/v1/creative/:creativeId)
+deactivate DLive
+
+==  Asset정보 사전연동 ==
+DLive --> MediaAPI : API 인증(/mediaApi/v1/auth)
+DLive --> MediaAPI : 카테고리 정보 연동(POST /mediaApi/v1/metaCode)
+DLive --> MediaAPI : CP 정보 연동(POST /mediaApi/v1/metaCode)
+DLive --> MediaAPI : 시청등급 정보 연동(POST /mediaApi/v1/metaCode)
+
+== 광고처리 ==
+group Ad Request, Response
+autonumber
+STP -> DLive : 광고요청
+DLive -> Shark : 광고요청(신규정의)
+Shark -> DLive : 광고응답(신규정의)
+DLive -> 외부GW : 광고로그(수집서버/request.html?parameter=value)
+autonumber stop
+end
+
+@enduml

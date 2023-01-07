@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds">
+    <property name="APPLICATION_BASE_PACKAGE" value="practice.ad" />
+    <property name="LOG_HOME" value="logs/service" />
+    <property name="ERROR_LOG_HOME" value="logs/error" />
+    <property name="REPORT_HOME" value="logs" />
+
+    <property name="SERVICE_LOG_PATTERN"  value="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5level] [%logger{36}] - %msg%n" />
+    <property name="ERROR_LOG_PATTERN"    value="[%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%logger{36}] %msg%n" />
+    <property name="REPORT_LOG_PATTERN"  value="%msg%n" />
+
+    <appender name="REPORT_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${REPORT_HOME}/access.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${REPORT_HOME}/access-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${REPORT_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy:MM:dd HH:mm:ss.SSS} %-5level --- [%thread] %logger{35} : %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="accReportFile" level="INFO" additivity="false">
+        <appender-ref ref="REPORT_LOG" />
+    </logger>
+
+
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.hibernate" level="INFO" />
+    <logger name="org.hibernate.SQL" level="DEBUG" />
+    <logger name="dev.example.order" level="DEBUG"/>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

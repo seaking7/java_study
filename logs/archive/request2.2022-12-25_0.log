@@ -1,0 +1,8 @@
+#logback.classic pattern: [REQUEST2] [%-5level] %d{yyyy-MM-dd HH:mm:ss} [%thread] [%logger{0}:%line] - %msg%n
+[REQUEST2] [INFO ] 2022-12-25 11:59:04 [main] [LogbackApplication:55] - Starting LogbackApplication using Java 17.0.3 on taekyungKim-mac.local with PID 3125 (/Users/taekyungkim/workspace/java_study/Logback/build/classes/java/main started by taekyungkim in /Users/taekyungkim/workspace/java_study)
+[REQUEST2] [INFO ] 2022-12-25 11:59:04 [main] [LogbackApplication:640] - The following 1 profile is active: "prod"
+[REQUEST2] [INFO ] 2022-12-25 11:59:05 [main] [TomcatWebServer:108] - Tomcat initialized with port(s): 8080 (http)
+[REQUEST2] [INFO ] 2022-12-25 11:59:05 [main] [StandardService:173] - Starting service [Tomcat]
+[REQUEST2] [INFO ] 2022-12-25 11:59:05 [main] [StandardEngine:173] - Starting Servlet engine: [Apache Tomcat/9.0.65]
+[REQUEST2] [INFO ] 2022-12-25 11:59:05 [main] [[/]:173] - Initializing Spring embedded WebApplicationContext
+[REQUEST2] [INFO ] 2022-12-25 11:59:05 [main] [ServletWebServerApplicationContext:292] - Root WebApplicationContext: initialization completed in 947 ms

@@ -1,0 +1,13 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 11111
+            client-secret: 2222
+            scope: profile,email
+          github:
+            client-id: 2222
+            client-secret: 3333
+            scope: profile,email

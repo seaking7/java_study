@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<div class="menu">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <div>
+        <nav class="navbar navbar-expand-sm bg-mode navbar-light justify-content-center">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        <img class="me-2 h-20px fa-fw" src="/assets/images/icon/home-outline-filled.svg" alt="">홈</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/app">
+                        <img class="me-2 h-20px fa-fw" src="/assets/images/icon/imac-outline-filled.svg" alt="">
+                        <span>app 관리</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/ads">
+                        <img class="me-2 h-20px fa-fw" src="/assets/images/icon/bookmark-outline-filled.svg" alt="">애즈 관리</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/strategy">
+                        <img class="me-2 h-20px fa-fw" src="/assets/images/icon/cog-outline-filled.svg" alt="">정책관리</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div> <!-- /menu -->
+
+<div class="container" style="margin-top:30px">
+    <div class="row">
+        <div class="col-sm-3">
+
+            <!-- Side Nav START -->
+            <ul class="nav nav-tabs nav-pills nav-pills-soft flex-column fw-bold gap-2 border-0">
+                <li class="nav-item">
+                    <a class="nav-link d-flex mb-0" href="/ads">
+                        <img class="me-2 h-20px fa-fw" src="/assets/images/icon/clipboard-outline-filled.svg" alt="">
+                        <span>목록관리 </span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex mb-0 active" href="/ads/new">
+                        <img class="me-2 h-20px fa-fw" src="/assets/images/icon/upload-cloud-outline-filled.svg" alt="">
+                        <span>등록 </span></a>
+                </li>
+            </ul>
+            <!-- Side Nav END -->
+
+
+
+        </div>
+        <div class="col-sm-9">
+            <h2>애즈 신규등록</h2>
+            <h5>사용할 애즈를 등록합니다.</h5>
+            <div class="container">   <!-- container -->
+                <form action="/ads/new" th:action th:object="${ads}" method="post">
+
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td width="100"> 애즈아이디 : </td><td>
+                            <input type="text" class="form-control" id="adsId" name="adsId" placeholder="아이디를 입력하세요"></td>
+                        </tr>
+                        <tr>
+                            <td width="100"> 애즈명 : </td><td>
+                            <input type="text" class="form-control" id="adsName" name="adsName" placeholder="앱이름을 입력하세요"></td>
+                        </tr>
+                        <tr>
+                            <td width="100"> 소재경로 : </td><td>
+                            <input type="text" class="form-control" id="materialUrl" name="materialUrl" placeholder="소재경로를 입력하세요"></td>
+                        </tr>
+                        <tr>
+                            <td width="100"> 소재넓이 : </td><td>
+                            <input type="text" class="form-control" id="adsWidth" name="adsWidth" placeholder="소재넓이를 입력하세요"></td>
+                        </tr>
+                        <tr>
+                            <td width="100"> 소재높이 : </td><td>
+                            <input type="text" class="form-control" id="adsHeight" name="adsHeight" placeholder="소재높이를 입력하세요"></td>
+                        </tr>
+
+                        <!-- radio button -->
+                        <tr>
+                            <td width="100"> 소재타입 : </td><td width="600">
+                            <div th:each="type : ${adsTypes}" class="form-check form-check-inline">
+                                <input type="radio" th:field="*{adsType}" th:value="${type.name()}" class="form-check-input">
+                                <label th:for="${#ids.prev('adsType')}" th:text="${type.description}" class="form-check-label">
+                                    이미지
+                                </label>
+                            </div>
+                        </tr>
+
+                        <tr></tr>
+                        <tr></tr>
+                        <tr><td></td><td><button class="btn btn-primary" type="submit">등록</button></td></tr>
+                        </tbody>
+                    </table>
+
+                    <div th:if="${error_msg != null}">
+                        <p></p>
+                        <h4 class="field-error text-danger"  th:text="${error_msg}">글로벌 오류 메시지</h4>
+                        <p></p>
+                    </div>
+
+                </form>
+            </div> <!-- /container -->
+
+            <br>
+        </div>
+    </div>
+</div> <!-- /container -->
+<div th:replace="fragments/footer :: footer" />
+
+</body>
+</html>

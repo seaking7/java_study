@@ -1,0 +1,10 @@
+#logback.classic pattern: [REQUEST1] [%-5level] %d{yyyy-MM-dd HH:mm:ss} [%thread] [%logger{0}:%line] - %msg%n
+[REQUEST1] [INFO ] 2022-12-25 12:05:09 [main] [TomcatWebServer:108] - Tomcat initialized with port(s): 8080 (http)
+[REQUEST1] [INFO ] 2022-12-25 12:05:09 [main] [StandardService:173] - Starting service [Tomcat]
+[REQUEST1] [INFO ] 2022-12-25 12:05:09 [main] [StandardEngine:173] - Starting Servlet engine: [Apache Tomcat/9.0.65]
+[REQUEST1] [INFO ] 2022-12-25 12:05:09 [main] [[/]:173] - Initializing Spring embedded WebApplicationContext
+[REQUEST1] [INFO ] 2022-12-25 12:05:09 [main] [ServletWebServerApplicationContext:292] - Root WebApplicationContext: initialization completed in 897 ms
+[REQUEST1] [INFO ] 2022-12-25 12:05:09 [main] [TomcatWebServer:220] - Tomcat started on port(s): 8080 (http) with context path ''
+[REQUEST1] [INFO ] 2022-12-25 12:05:09 [main] [LogbackApplication:61] - Started LogbackApplication in 1.818 seconds (JVM running for 2.363)
+[REQUEST1] [INFO ] 2022-12-25 12:05:16 [http-nio-8080-exec-1] [[/]:173] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+[REQUEST1] [INFO ] 2022-12-25 12:05:16 [http-nio-8080-exec-1] [DispatcherServlet:525] - Initializing Servlet 'dispatcherServlet'
