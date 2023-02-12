@@ -17,4 +17,5 @@ public interface AdsRepository extends JpaRepository<Ads, Long> {
 
     @Query("select m from Ads m where m.adsType = :adsType and m.adsWidth/m.adsHeight in (select s.adsWidth/s.adsHeight from Ads s where s.adsId = :adsId)")
     List<Ads> findByAdsTypeEqualsMatchRatioAdsId(AdsType adsType, String adsId);
+
 }
