@@ -1,0 +1,46 @@
+### Swagger 확인(브라우져로 확인하세요)
+GET http://localhost:8080/swagger-ui/index.html
+
+### 현재 세션 현황 확인
+GET http://localhost:8080/api/session/status
+Content-Type: application/json
+
+
+### 로그인 처리(현재 userKey는 의미없음)
+POST http://localhost:8080/api/session/login
+Content-Type: application/json
+
+{
+  "email": "seaking7@gmail.com",
+  "name": "taekyung",
+  "userKey": "randomkey1234",
+  "photo": "http://localhost:8080"
+}
+
+### 반려동물 장례식장 리스트
+GET http://localhost:8080/api/funeral/list
+Content-Type: application/json
+
+### 추모 게시판 리스트
+GET http://localhost:8080/api/missing/list
+Content-Type: application/json
+
+### 반려동물과 채팅
+GET http://localhost:8080/api/chat/question?question=엄마가 많이 보고싶다.
+Content-Type: application/json
+
+### 심리상담사와 채팅
+GET http://localhost:8080/api/chat/questionCounselor?question=우리 아이가 계속 생각나요.
+Content-Type: application/json
+
+
+### 반려동물과 채팅이력 조회(로그인 사용자는 본인의 채팅이력, 비로그인자는 guest 채팅이력)
+GET http://localhost:8080/api/chat/chat-history
+Content-Type: application/json
+
+
+### 반려동물 이미지생성
+GET http://localhost:8080/api/chat/createImage?question=흰색 말티즈
+
+### davinci 문장완성
+GET http://localhost:8080/api/chat/completion?question=한국에 강원도는 어떤 곳이니
