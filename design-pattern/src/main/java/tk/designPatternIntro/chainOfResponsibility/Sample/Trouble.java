@@ -1,3 +1,5 @@
+package tk.designPatternIntro.chainOfResponsibility.Sample;
+
 public class Trouble {
     private int number; // 트러블 번호 
 

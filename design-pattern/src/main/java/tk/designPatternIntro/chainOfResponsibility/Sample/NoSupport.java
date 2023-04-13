@@ -1,3 +1,5 @@
+package tk.designPatternIntro.chainOfResponsibility.Sample;
+
 public class NoSupport extends Support {
     public NoSupport(String name) {
         super(name);

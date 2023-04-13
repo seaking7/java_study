@@ -1,3 +1,5 @@
+package tk.designPatternIntro.chainOfResponsibility.Sample;
+
 public class LimitSupport extends Support {
     private int limit; // 이 번호 미만이면 해결할 수 있다
 

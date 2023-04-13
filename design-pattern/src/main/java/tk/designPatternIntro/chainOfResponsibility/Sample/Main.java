@@ -1,3 +1,5 @@
+package tk.designPatternIntro.chainOfResponsibility.Sample;
+
 public class Main {
     public static void main(String[] args) {
         Support alice = new NoSupport("Alice");

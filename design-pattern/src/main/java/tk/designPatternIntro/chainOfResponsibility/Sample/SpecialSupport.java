@@ -1,3 +1,5 @@
+package tk.designPatternIntro.chainOfResponsibility.Sample;
+
 public class SpecialSupport extends Support {
     private int number; // 이 번호만 해결할 수 있다
 

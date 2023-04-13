@@ -67,3 +67,6 @@ springdoc:
 
 space:
   openai-key: ENC(wy6xPCx6vIkDkoD7YQcjT1xtzwpny6Rdhv47teep8eS/IG++miXF0/67+AP20jMcKd2UZryCGrZsieBrCy+g7w==)
+logging:
+  level:
+    root: debug
